@@ -124,7 +124,7 @@ namespace CalculatorDemo
 
                     matches = rx.Matches(match);
 
-                    if (matches.Count == 1)
+                    if (matches.Count > 0)
                     {
                         foreach (Match item in matches)
                         {
