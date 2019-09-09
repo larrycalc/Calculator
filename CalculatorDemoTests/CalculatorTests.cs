@@ -38,6 +38,34 @@ namespace CalculatorDemoTests
             Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
         }
 
+        [TestMethod]
+        public void CalculatorAddition_IgnoreGreaterThan1000_SumsCorrectly()
+        {
+            // Arrange
+            var inputString = "2,1001,6 ";
+            int expected = 8;
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
+        }
+
+        [TestMethod]
+        public void CalculatorAddition_WithCustomDelimiter_SumsCorrectly()
+        {
+            // Arrange
+            var inputString = "//;\n2;5";
+            int expected = 7;
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
+        }
+
     }
 
 
@@ -239,17 +267,21 @@ namespace CalculatorDemoTests
         }
 
         [TestMethod]
-        public void ValidateNumberList_With1NumberGreaterThan1000_IgnoresNumber()
+        public void FindCustomDelimiter_With1CustomDelimiter_ReturnsDelimiterAndSearchText()
         {
             // Arrange
-            string[] inputValues = new string[] { "2", "1001", "6" };
-            List<int> expected = new List<int> { 2, 6 };
+            CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
+            calcDataTransfer.InputString = "//;\n2;5";
+
+            List<string> expected = new List<string> { ";" };
+            string searchText = "2;5";
 
             // Act
-            var result = InputProcessor.ValidateNumberList(inputValues);
+            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
 
             // Assert
-            CollectionAssert.AreEquivalent(expected, result);
+            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            Assert.AreEqual(searchText, result.SearchString);
         }
 
     }
