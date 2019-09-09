@@ -91,7 +91,7 @@ namespace CalculatorDemo
         public CalcDataTransfer FindCustomDelimiter(CalcDataTransfer calcDataTransfer)
         {
             // Pattern for a custom defined delimiter: //{delimiter}\n{numbers} 
-            Regex rx = new Regex(@"\/\/(.)\n");
+            Regex rx = new Regex(@"\/\/(.+)\n");
 
             string text = calcDataTransfer.InputString;
             string searchText = calcDataTransfer.InputString;
@@ -107,10 +107,33 @@ namespace CalculatorDemo
             {
                 // Groups[1] contains matched text only
                 match = matches[0].Groups[1].Value;
-                delimiters.Add(match);
 
-                // get text after custom delimiter
-                searchText = text.Substring(match.Length + 3);
+                // Single char delimiter
+                if (match.Length == 1)
+                {
+                    delimiters.Add(match);
+
+                    // get text after custom delimiter
+                    searchText = text.Substring(match.Length + 3);
+                }
+                else
+                {
+                    // Determine if multiple character custom delimiters exists
+                    rx = new Regex(@"\[(.*?)\]",
+                        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+                    matches = rx.Matches(match);
+
+                    if (matches.Count == 1)
+                    {
+                        foreach (Match item in matches)
+                        {
+                            delimiters.Add(item.Groups[1].Value);
+                        }
+
+                        searchText = text.Substring(match.Length + 3);
+                    }
+                }
             }
 
             calcDataTransfer.Delimiters = delimiters;

@@ -53,11 +53,25 @@ namespace CalculatorDemoTests
         }
 
         [TestMethod]
-        public void CalculatorAddition_WithCustomDelimiter_SumsCorrectly()
+        public void CalculatorAddition_WithSingleCharacterCustomDelimiter_SumsCorrectly()
         {
             // Arrange
             var inputString = "//;\n2;5";
             int expected = 7;
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
+        }
+
+        [TestMethod]
+        public void CalculatorAddition_WithMultipleCharacterCustomDelimiter_SumsCorrectly()
+        {
+            // Arrange
+            var inputString = "//[***]\n11***22***33";
+            int expected = 66;
 
             // Act
             CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
@@ -267,7 +281,7 @@ namespace CalculatorDemoTests
         }
 
         [TestMethod]
-        public void FindCustomDelimiter_With1CustomDelimiter_ReturnsDelimiterAndSearchText()
+        public void FindCustomDelimiter_With1CharacterCustomDelimiter_ReturnsDelimiterAndSearchText()
         {
             // Arrange
             CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
@@ -275,6 +289,42 @@ namespace CalculatorDemoTests
 
             List<string> expected = new List<string> { ";" };
             string searchText = "2;5";
+
+            // Act
+            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
+
+            // Assert
+            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            Assert.AreEqual(searchText, result.SearchString);
+        }
+
+        [TestMethod]
+        public void FindCustomDelimiter_With2CharacterCustomDelimiter_ReturnsNoDelimiterAndCompleteInputString()
+        {
+            // Arrange
+            CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
+            calcDataTransfer.InputString = "//;:\n2;5";
+
+            List<string> expected = new List<string> {};
+            string searchText = "//;:\n2;5";
+
+            // Act
+            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
+
+            // Assert
+            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            Assert.AreEqual(searchText, result.SearchString);
+        }
+
+        [TestMethod]
+        public void FindCustomDelimiter_WithMultipleCharacterCustomDelimiter_ReturnsDelimiterAndSearchText()
+        {
+            // Arrange
+            CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
+            calcDataTransfer.InputString = "//[***]\n11***22***33";
+
+            List<string> expected = new List<string> { "***" };
+            string searchText = "11***22***33";
 
             // Act
             var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
