@@ -42,7 +42,10 @@ namespace CalculatorDemo
                 {
                     if (Int32.TryParse(strList[i], out int number))
                     {
-                        numberList.Add(number);
+                        if (number < 1001)
+                        {
+                            numberList.Add(number);
+                        }
                         if (number < 0)
                         {
                             negativeNumberList += number + " ";

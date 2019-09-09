@@ -14,8 +14,8 @@ namespace CalculatorDemoTests
         public void CalculatorAddition_With2ValidInputs_SumsCorrectly()
         {
             // Arrange
-            var inputString = "1,5000";
-            int expected = 5001;
+            var inputString = "1,500";
+            int expected = 501;
 
             // Act
             CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
@@ -236,6 +236,20 @@ namespace CalculatorDemoTests
                 StringAssert.Contains(e.Message, "-2");
                 Assert.IsFalse(e.Message.Contains("3"));
             }
+        }
+
+        [TestMethod]
+        public void ValidateNumberList_With1NumberGreaterThan1000_IgnoresNumber()
+        {
+            // Arrange
+            string[] inputValues = new string[] { "2", "1001", "6" };
+            List<int> expected = new List<int> { 2, 6 };
+
+            // Act
+            var result = InputProcessor.ValidateNumberList(inputValues);
+
+            // Assert
+            CollectionAssert.AreEquivalent(expected, result);
         }
 
     }
