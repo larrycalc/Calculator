@@ -12,5 +12,6 @@ namespace CalculatorDemo
         public string InputString { get; set; }
         public string SearchString { get; set; }
         public List<string> Delimiters { get; set; }
+        public string Formula { get; set; }
     }
 }

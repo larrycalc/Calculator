@@ -21,6 +21,7 @@ namespace CalculatorDemo
                 if (calcDataTransfer.ErrorMessage == null)
                 {
                     Console.WriteLine(calcDataTransfer.NumberOutput);
+                    Console.WriteLine(calcDataTransfer.Formula);
                 }
                 else
                 {

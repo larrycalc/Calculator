@@ -395,4 +395,26 @@ namespace CalculatorDemoTests
         }
 
     }
+
+    [TestClass]
+    public class CalulatorTests
+    {
+        [TestMethod]
+        public void FindCustomDelimiter_WithMultipleCustomDelimiters_ReturnsDelimitersAndSearchText()
+        {
+            // Arrange
+            Calculator calculator = new Calculator();
+            CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
+            calcDataTransfer.NumbersInput = new List<int> { 1, 2, 3 };
+            calcDataTransfer.NumberOutput = 6;
+            string expected = "1+2+3 = 6";
+
+            // Act
+            var result = calculator.CreateFormula(calcDataTransfer);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+    }
+
 }
