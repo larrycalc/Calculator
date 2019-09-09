@@ -17,11 +17,11 @@ namespace CalculatorDemo
             var strList = argument.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
 
             // Reports error if more than 2 values entered.
-            if (strList.Length > 2)
-            {
-                calcDataTransfer.ErrorMessage = "Error:  Only 2 values can be entered.";
-                return calcDataTransfer;
-            }
+            //if (strList.Length > 2)
+            //{
+            //    calcDataTransfer.ErrorMessage = "Error:  Only 2 values can be entered.";
+            //    return calcDataTransfer;
+            //}
 
             List<int> numberList = new List<int>();
 

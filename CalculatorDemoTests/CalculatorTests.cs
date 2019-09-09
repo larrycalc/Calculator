@@ -116,6 +116,19 @@ namespace CalculatorDemoTests
             CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
         }
 
+        [TestMethod]
+        public void SeperateValues_With3ValidInputs_StoresCorrectly()
+        {
+            // Arrange
+            string inputValues = "1,2,3";
+            List<int> expected = new List<int> { 1, 2, 3 };
+
+            // Act
+            CalcDataTransfer calcDataTransfer = inputProcessor.SeperateValues(inputValues);
+
+            // Assert
+            CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
+        }
 
         [TestMethod]
         public void SeperateValues_WithInValidInteger_Stores0()
@@ -145,19 +158,19 @@ namespace CalculatorDemoTests
             CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
         }
 
-        [TestMethod]
-        public void SeperateValues_With3Inputs_ReturnsError()
-        {
-            // Arrange
-            string inputValues = "1,2,3";
-            List<int> expected = new List<int> { 1, 2 };
+        //[TestMethod]
+        //public void SeperateValues_With3Inputs_ReturnsError()
+        //{
+        //    // Arrange
+        //    string inputValues = "1,2,3";
+        //    List<int> expected = new List<int> { 1, 2 };
 
-            // Act
-            CalcDataTransfer calcDataTransfer = inputProcessor.SeperateValues(inputValues);
+        //    // Act
+        //    CalcDataTransfer calcDataTransfer = inputProcessor.SeperateValues(inputValues);
 
-            // Assert
-            Assert.IsNotNull(calcDataTransfer.ErrorMessage);
-        }
+        //    // Assert
+        //    Assert.IsNotNull(calcDataTransfer.ErrorMessage);
+        //}
 
     }
 }
