@@ -201,5 +201,42 @@ namespace CalculatorDemoTests
             CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
         }
 
+
+        [TestMethod]
+        public void ValidateNumberList_With1NegativeNumber_ThrowsException()
+        {
+            // Arrange
+            string[] inputValues = new string[] { "-1" };
+
+            try
+            {
+                InputProcessor.ValidateNumberList(inputValues);
+            }
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                // Assert
+                StringAssert.Contains(e.Message, "-1");
+            }
+        }
+
+        [TestMethod]
+        public void ValidateNumberList_WithNegativePositiveNumbers_ThrowsExceptionWithOnlyNegativeNumbersReturned()
+        {
+            // Arrange
+            string[] inputValues = new string[] { "-1", "3", "-2" };
+
+            try
+            {
+                InputProcessor.ValidateNumberList(inputValues);
+            }
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                // Assert
+                StringAssert.Contains(e.Message, "-1");
+                StringAssert.Contains(e.Message, "-2");
+                Assert.IsFalse(e.Message.Contains("3"));
+            }
+        }
+
     }
 }

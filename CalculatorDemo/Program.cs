@@ -27,6 +27,10 @@ namespace CalculatorDemo
                     Console.WriteLine(calcDataTransfer.ErrorMessage);
                 }
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             catch (Exception)
             {
                 Console.WriteLine("An Exception occured");

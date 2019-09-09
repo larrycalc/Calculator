@@ -23,7 +23,17 @@ namespace CalculatorDemo
             //    return calcDataTransfer;
             //}
 
+            List<int> numberList = ValidateNumberList(strList);
+
+            calcDataTransfer.NumbersInput = numberList;
+
+            return calcDataTransfer;
+        }
+
+        public static List<int> ValidateNumberList(string[] strList)
+        {
             List<int> numberList = new List<int>();
+            string negativeNumberList = "";
 
             if (strList.Length > 0)
             {
@@ -33,6 +43,10 @@ namespace CalculatorDemo
                     if (Int32.TryParse(strList[i], out int number))
                     {
                         numberList.Add(number);
+                        if (number < 0)
+                        {
+                            negativeNumberList += number + " ";
+                        }
                     }
                     else
                     {
@@ -45,9 +59,12 @@ namespace CalculatorDemo
                 numberList.Add(0);
             }
 
-            calcDataTransfer.NumbersInput = numberList;
+            if (negativeNumberList != "")
+            {
+                throw new ArgumentOutOfRangeException("Negative numbers are not allowed: " + negativeNumberList);
+            }
 
-            return calcDataTransfer;
+            return numberList;
         }
     }
 }
