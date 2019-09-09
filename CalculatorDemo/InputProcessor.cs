@@ -11,7 +11,7 @@ namespace CalculatorDemo
         {
             CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
 
-            string delimiter = ",";
+            string[] delimiter = { ",", "\n" };
 
             // Separate the input numbers based on a delimiter
             var strList = argument.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);

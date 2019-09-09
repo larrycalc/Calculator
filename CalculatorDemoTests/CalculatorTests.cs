@@ -23,6 +23,21 @@ namespace CalculatorDemoTests
             // Assert
             Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
         }
+
+        [TestMethod]
+        public void CalculatorAddition_With3ValidInputsAndNewline_SumsCorrectly()
+        {
+            // Arrange
+            var inputString = "1\n2,3";
+            int expected = 6;
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
+        }
+
     }
 
 
@@ -171,6 +186,20 @@ namespace CalculatorDemoTests
         //    // Assert
         //    Assert.IsNotNull(calcDataTransfer.ErrorMessage);
         //}
+
+        [TestMethod]
+        public void SeperateValues_With2ValidInputsAndNewline_StoresCorrectly()
+        {
+            // Arrange
+            string inputValues = "1\n2";
+            List<int> expected = new List<int> { 1, 2 };
+
+            // Act
+            CalcDataTransfer calcDataTransfer = inputProcessor.SeperateValues(inputValues);
+
+            // Assert
+            CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
+        }
 
     }
 }

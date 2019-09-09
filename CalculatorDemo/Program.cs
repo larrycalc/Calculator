@@ -33,12 +33,31 @@ namespace CalculatorDemo
             }
         }
 
+
         // Receive user input from a Console window
         public static string ConsoleInput()
         {
             Console.WriteLine("Enter 1 or 2 numbers seperated by a , . For example 1,2");
 
-            string readInput = Console.ReadLine();
+            const int newlineValue = 10;
+            const int carriageReturnValue = 13;
+
+            string readInput = "";
+
+            // Read input until Carriage Return And New Line entered.
+            while (true)
+            {
+                var firstInput = Console.Read();
+                if (firstInput == carriageReturnValue)
+                {
+                    var secondInput = Console.Read();
+                    if (secondInput == newlineValue)
+                    {
+                        break;
+                    }
+                }
+                readInput += Convert.ToChar(firstInput);
+            }
 
             return readInput;
         }
