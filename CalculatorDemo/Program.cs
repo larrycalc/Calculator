@@ -11,30 +11,35 @@ namespace CalculatorDemo
     {
         public static void Main(string[] args)
         {
-            try
+            while (true)
             {
-                var inputString = ConsoleInput();
-
-                Calculator calculator = new Calculator();
-                CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
-
-                if (calcDataTransfer.ErrorMessage == null)
+                try
                 {
-                    Console.WriteLine(calcDataTransfer.NumberOutput);
-                    Console.WriteLine(calcDataTransfer.Formula);
+                    var inputString = ConsoleInput();
+
+                    Calculator calculator = new Calculator();
+                    CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+                    if (calcDataTransfer.ErrorMessage == null)
+                    {
+                        Console.WriteLine(calcDataTransfer.NumberOutput);
+                        Console.WriteLine(calcDataTransfer.Formula);
+                    }
+                    else
+                    {
+                        Console.WriteLine(calcDataTransfer.ErrorMessage);
+                    }
                 }
-                else
+                catch (ArgumentOutOfRangeException ex)
                 {
-                    Console.WriteLine(calcDataTransfer.ErrorMessage);
+                    Console.WriteLine(ex.Message);
                 }
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An Exception occured");
+                catch (Exception)
+                {
+                    Console.WriteLine("An Exception occured.");
+                }
+
+                Console.WriteLine();
             }
         }
 
@@ -43,6 +48,7 @@ namespace CalculatorDemo
         public static string ConsoleInput()
         {
             Console.WriteLine("Enter 1 or more numbers seperated by a , or create a custom delimited string in the format: //[{delimiter1}][{delimiter2}]...\\n{numbers}");
+            Console.WriteLine("Or Press Ctrl+C to exit.");
 
             const int newlineValue = 10;
             const int carriageReturnValue = 13;
