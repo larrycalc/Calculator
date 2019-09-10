@@ -122,6 +122,48 @@ namespace CalculatorDemoTests
             Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
         }
 
+        [TestMethod]
+        public void CalculatorAddition_WithMultipleCustomDelimitersInvalidNumber_SumsCorrectly()
+        {
+            // Arrange
+            var inputString = "//[*][!!][rrr]\n11rrr22,tytyt,*33!!44";
+            int expected = 110;
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.NumberOutput);
+        }
+
+        [TestMethod]
+        public void CalculatorAddition_WithMultipleCustomDelimiters_FormulaCorrect()
+        {
+            // Arrange
+            var inputString = "//[*][!!][rrr]\n11rrr22*33!!44";
+            string expected = "11+22+33+44 = 110";
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.Formula);
+        }
+
+        [TestMethod]
+        public void CalculatorAddition_WithMultipleCustomDelimitersInvalidNumber_FormulaCorrect()
+        {
+            // Arrange
+            var inputString = "//[*][!!][rrr]\n11rrr22,tytyt,*33!!44";
+            string expected = "11+22+0+33+44 = 110";
+
+            // Act
+            CalcDataTransfer calcDataTransfer = calculator.Run(inputString);
+
+            // Assert
+            Assert.AreEqual(expected, calcDataTransfer.Formula);
+        }
+
     }
 
 
@@ -285,6 +327,19 @@ namespace CalculatorDemoTests
             CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
         }
 
+        [TestMethod]
+        public void SeperateValues_WithMultipleCharacterCustomDelimiter_StoresCorrectly()
+        {
+            // Arrange
+            string inputValues = "//[*][!!][rrr]\n11rrr22*33!!44";
+            List<int> expected = new List<int> { 11, 22, 33, 44 };
+
+            // Act
+            CalcDataTransfer calcDataTransfer = inputProcessor.SeperateValues(inputValues);
+
+            // Assert
+            CollectionAssert.AreEquivalent(expected, (List<int>)calcDataTransfer.NumbersInput);
+        }
 
         [TestMethod]
         public void ValidateNumberList_With1NegativeNumber_ThrowsException()
@@ -400,7 +455,7 @@ namespace CalculatorDemoTests
     public class CalulatorTests
     {
         [TestMethod]
-        public void FindCustomDelimiter_WithMultipleCustomDelimiters_ReturnsDelimitersAndSearchText()
+        public void CreateFormula_WithValidNumbers_OutputsFormula()
         {
             // Arrange
             Calculator calculator = new Calculator();
@@ -415,6 +470,24 @@ namespace CalculatorDemoTests
             // Assert
             Assert.AreEqual(expected, result);
         }
+
+        [TestMethod]
+        public void CreateFormula_WithNoNumbers_OutputsFormula()
+        {
+            // Arrange
+            Calculator calculator = new Calculator();
+            CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
+            calcDataTransfer.NumbersInput = new List<int> { };
+            calcDataTransfer.NumberOutput = 0;
+            string expected = " = 0";
+
+            // Act
+            var result = calculator.CreateFormula(calcDataTransfer);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
     }
 
 }

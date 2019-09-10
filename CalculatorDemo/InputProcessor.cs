@@ -13,22 +13,19 @@ namespace CalculatorDemo
 
             calcDataTransfer.InputString = argument;
             
-            var customDelimiter = FindCustomDelimiter(calcDataTransfer);
-
-
+            var customDelimiterSearchText = FindCustomDelimiter(calcDataTransfer);
 
             List<string> delimiterInitial = new List<string> { ",", "\n" };
 
-            foreach (var item in customDelimiter.Delimiters)
+            foreach (var item in customDelimiterSearchText.Delimiters)
             {
                 delimiterInitial.Add(item);
             }
 
             var delimiter = delimiterInitial.ToArray();
             
-
             // Separate the input numbers based on a delimiter
-            var strList = argument.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+            var strList = customDelimiterSearchText.SearchString.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
 
             // Reports error if more than 2 values entered.
             //if (strList.Length > 2)
@@ -49,7 +46,7 @@ namespace CalculatorDemo
         public static List<int> ValidateNumberList(string[] strList)
         {
             List<int> numberList = new List<int>();
-            string negativeNumberList = "";
+            string negativeNumbers = "";
 
             if (strList.Length > 0)
             {
@@ -64,7 +61,7 @@ namespace CalculatorDemo
                         }
                         if (number < 0)
                         {
-                            negativeNumberList += number + " ";
+                            negativeNumbers += number + " ";
                         }
                     }
                     else
@@ -78,9 +75,9 @@ namespace CalculatorDemo
                 numberList.Add(0);
             }
 
-            if (negativeNumberList != "")
+            if (negativeNumbers != "")
             {
-                throw new ArgumentOutOfRangeException("Negative numbers are not allowed: " + negativeNumberList);
+                throw new ArgumentOutOfRangeException("Negative numbers are not allowed: " + negativeNumbers);
             }
 
             return numberList;

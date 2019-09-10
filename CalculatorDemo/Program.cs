@@ -42,7 +42,7 @@ namespace CalculatorDemo
         // Receive user input from a Console window
         public static string ConsoleInput()
         {
-            Console.WriteLine("Enter 1 or 2 numbers seperated by a , . For example 1,2");
+            Console.WriteLine("Enter 1 or more numbers seperated by a , or create a custom delimited string in the format: //[{delimiter1}][{delimiter2}]...\\n{numbers}");
 
             const int newlineValue = 10;
             const int carriageReturnValue = 13;
