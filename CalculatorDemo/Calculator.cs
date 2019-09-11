@@ -15,12 +15,24 @@ namespace CalculatorDemo
 
             if (calcDataTransfer.ErrorMessage == null)
             {
-                var calculator = new CalculatorMath();
-                calcDataTransfer.NumberOutput = calculator.MathOperation(calcDataTransfer);
+                calcDataTransfer.NumberOutput = MathOperation(calcDataTransfer);
                 calcDataTransfer.Formula = CreateFormula(calcDataTransfer);
             }
 
             return calcDataTransfer;
+        }
+
+        public int MathOperation(CalcDataTransfer calcDataTransfer)
+        {
+            int result = 0;
+
+            // loop through list and perform mathematical operation
+            foreach (int s in calcDataTransfer.NumbersInput)
+            {
+                result += s;
+            }
+
+            return result;
         }
 
         public string CreateFormula(CalcDataTransfer calcDataTransfer)

@@ -7,13 +7,13 @@ namespace CalculatorDemo
     public class InputProcessor
     {
         // Seperate the input string using delimiters and return the number values
-        public CalcDataTransfer SeperateValues(string argument)
+        public CalcDataTransfer SeperateValues(string inputString)
         {
             CalcDataTransfer calcDataTransfer = new CalcDataTransfer();
 
-            calcDataTransfer.InputString = argument;
+            calcDataTransfer.InputString = inputString;
             
-            var customDelimiterSearchText = FindCustomDelimiter(calcDataTransfer);
+            var customDelimiterSearchText = FindCustomDelimiterSearchText(calcDataTransfer);
 
             List<string> delimiterInitial = new List<string> { ",", "\n" };
 
@@ -34,7 +34,7 @@ namespace CalculatorDemo
             //    return calcDataTransfer;
             //}
 
-            List<int> numberList = ValidateNumberList(strList);
+            IEnumerable<int> numberList = ValidateNumberList(strList);
 
             calcDataTransfer.NumbersInput = numberList;
 
@@ -43,9 +43,9 @@ namespace CalculatorDemo
 
 
         // Adds entries in a list if numbers are valid based on rules.
-        public static List<int> ValidateNumberList(string[] strList)
+        public IEnumerable<int> ValidateNumberList(string[] strList)
         {
-            List<int> numberList = new List<int>();
+            var numberList = new List<int>();
             string negativeNumbers = "";
 
             if (strList.Length > 0)
@@ -85,18 +85,18 @@ namespace CalculatorDemo
 
 
         // Finds custom delimiters and returns them and the remaining search string.
-        public CalcDataTransfer FindCustomDelimiter(CalcDataTransfer calcDataTransfer)
+        public CalcDataTransfer FindCustomDelimiterSearchText(CalcDataTransfer calcDataTransfer)
         {
             // Pattern for a custom defined delimiter: //{delimiter}\n{numbers} 
             Regex rx = new Regex(@"\/\/(.+)\n");
 
-            string text = calcDataTransfer.InputString;
-            string searchText = calcDataTransfer.InputString;
+            var text = calcDataTransfer.InputString;
+            var searchText = calcDataTransfer.InputString;
 
             // Find matches.
             MatchCollection matches = rx.Matches(text);
 
-            var match = "";
+            string match = "";
             List<string> delimiters = new List<string>();
 
             // A custom delimiter exists

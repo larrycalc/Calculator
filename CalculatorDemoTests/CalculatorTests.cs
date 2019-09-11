@@ -170,7 +170,7 @@ namespace CalculatorDemoTests
     [TestClass]
     public class CalculatorMathTests
     {
-        CalculatorMath calc = new CalculatorMath();
+        Calculator calculator = new Calculator();
 
         [TestMethod]
         public void Addition_With2ValidInputs_SumsCorrectly()
@@ -182,7 +182,7 @@ namespace CalculatorDemoTests
             int expected = 5001;
 
             // Act
-            var result = calc.MathOperation(calcDataTransfer);
+            var result = calculator.MathOperation(calcDataTransfer);
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -198,7 +198,7 @@ namespace CalculatorDemoTests
             int expected = 78;
 
             // Act
-            var result = calc.MathOperation(calcDataTransfer);
+            var result = calculator.MathOperation(calcDataTransfer);
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -214,7 +214,7 @@ namespace CalculatorDemoTests
             int expected = 20;
 
             // Act
-            var result = calc.MathOperation(calcDataTransfer);
+            var result = calculator.MathOperation(calcDataTransfer);
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -230,7 +230,7 @@ namespace CalculatorDemoTests
             int expected = 0;
 
             // Act
-            var result = calc.MathOperation(calcDataTransfer);
+            var result = calculator.MathOperation(calcDataTransfer);
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -349,7 +349,7 @@ namespace CalculatorDemoTests
 
             try
             {
-                InputProcessor.ValidateNumberList(inputValues);
+                inputProcessor.ValidateNumberList(inputValues);
             }
             catch (System.ArgumentOutOfRangeException e)
             {
@@ -366,7 +366,7 @@ namespace CalculatorDemoTests
 
             try
             {
-                InputProcessor.ValidateNumberList(inputValues);
+                inputProcessor.ValidateNumberList(inputValues);
             }
             catch (System.ArgumentOutOfRangeException e)
             {
@@ -388,10 +388,10 @@ namespace CalculatorDemoTests
             string searchText = "2;5";
 
             // Act
-            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
+            var result = inputProcessor.FindCustomDelimiterSearchText(calcDataTransfer);
 
             // Assert
-            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            CollectionAssert.AreEquivalent(expected, (List<string>)result.Delimiters);
             Assert.AreEqual(searchText, result.SearchString);
         }
 
@@ -406,10 +406,10 @@ namespace CalculatorDemoTests
             string searchText = "//;:\n2;5";
 
             // Act
-            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
+            var result = inputProcessor.FindCustomDelimiterSearchText(calcDataTransfer);
 
             // Assert
-            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            CollectionAssert.AreEquivalent(expected, (List<string>)result.Delimiters);
             Assert.AreEqual(searchText, result.SearchString);
         }
 
@@ -424,10 +424,10 @@ namespace CalculatorDemoTests
             string searchText = "11***22***33";
 
             // Act
-            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
+            var result = inputProcessor.FindCustomDelimiterSearchText(calcDataTransfer);
 
             // Assert
-            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            CollectionAssert.AreEquivalent(expected, (List<string>)result.Delimiters);
             Assert.AreEqual(searchText, result.SearchString);
         }
 
@@ -442,10 +442,10 @@ namespace CalculatorDemoTests
             string searchText = "11rrr22*33!!44";
 
             // Act
-            var result = inputProcessor.FindCustomDelimiter(calcDataTransfer);
+            var result = inputProcessor.FindCustomDelimiterSearchText(calcDataTransfer);
 
             // Assert
-            CollectionAssert.AreEquivalent(expected, result.Delimiters);
+            CollectionAssert.AreEquivalent(expected, (List<string>)result.Delimiters);
             Assert.AreEqual(searchText, result.SearchString);
         }
 
